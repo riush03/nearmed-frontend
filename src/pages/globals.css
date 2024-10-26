@@ -17,12 +17,12 @@
     from 180deg at 50% 50%,
     #16abff33 0deg,
     #0885ff33 55deg,
-    #54d6ff33 120deg,
+    #04171c33 120deg,
     #0071ff33 160deg,
     transparent 360deg
   );
   --secondary-glow: radial-gradient(
-    rgba(255, 255, 255, 1),
+    rgb(19, 9, 9),
     rgba(255, 255, 255, 0)
   );
 
@@ -61,13 +61,13 @@
     --tile-start-rgb: 2, 13, 46;
     --tile-end-rgb: 2, 5, 19;
     --tile-border: conic-gradient(
-      #ffffff80,
+      hsla(187, 71%, 19%, 0.854),
       #ffffff40,
       #ffffff30,
       #ffffff20,
       #ffffff10,
       #ffffff10,
-      #ffffff80
+      #be1d1d80
     );
 
     --callout-rgb: 20, 20, 20;

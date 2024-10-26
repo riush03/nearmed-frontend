@@ -108,7 +108,7 @@ export default function UserRegistrationForm() {
         bio: form_values.bio,
       });
       console.log("Patient added successfully:", result);
-      router.push("/dashboard")
+      router.push("/doctor")
     } catch (error) {
       console.error("Error adding patient:", error);
       // Handle error (e.g., show error message to user)
@@ -330,6 +330,19 @@ export default function UserRegistrationForm() {
                       <FormLabel>College Address</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Enter college address" {...field} className="min-h-[80px]" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="profile_pic"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Profile Picture URL</FormLabel>
+                      <FormControl>
+                        <Input placeholder="URL to profile picture" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

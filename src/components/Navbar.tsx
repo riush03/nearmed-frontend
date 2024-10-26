@@ -1,12 +1,12 @@
 import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useState,useEffect } from "react";
 import NewPlaceDialog from "./dialogs/NewPlaceDialog";
 import { wallet } from "@dapp/web3-services";
 import Image from "next/image";
 import placesLogo from "@dapp/images/places-logo.png";
 import CustomMenu from "./CustomMenu";
 import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
-import { Doctor } from "@dapp/web3-services/near-interface";
+import { Doctor,Patient } from "@dapp/web3-services/near-interface";
 import { contract } from "@dapp/web3-services";
 import { useRouter } from "next/navigation";
 import { NETWORK } from "@dapp/web3-services/near-wallet";
@@ -17,20 +17,30 @@ const Navbar = () => {
   const maxWidth615 = useMediaQuery("(max-width:615px)");
   const isUnder400 = useMediaQuery("(max-width:400px)");
   const [openNewPlaceDialog, setOpenNewPlaceDialog] = useState(false);
-  const [doctor, setDoctors] = useState<Doctor[] | null>(null);
+  // const [doctors, setDoctors] = useState<Doctor[] | null>(null);
+  // const [patients, setPatients] = useState<Patient[] | null>(null);
+  // const [isLoading, setIsLoading] = useState(false);
+ 
   const { isWalletConnected, ready,accountId  } = useWeb3Auth();
   const router = useRouter();
 
   const connectWalletHandler = useCallback(async () => {
     wallet.startUp(true);
+    const patients = await contract.getPatients();
+    console.log(patients);
 
     if (isWalletConnected && accountId) {
-      router.push("/dashboard");  // Redirect to dashboard if connected and account ID exists
+      const [patients, doctors] = await Promise.all([
+        contract.getPatients(),
+        contract.getDoctors()
+      ]);
+      router.push("/dashboard");  
+      console.log(patients);
     } else {
-      router.push("/register");    // Redirect to register if not connected or no account ID
+      router.push("/register");  
+      console.log(patients);
     }
   }, [router]);
-
   return (
     <Stack
       direction={maxWidth615 ? "column" : "row"}

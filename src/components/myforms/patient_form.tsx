@@ -82,7 +82,6 @@ export default function PatientRegistrationForm() {
       const form_values = form.getValues();
       // Assuming 'contract' is available in the scope
       const result = await contract.addPatient({
-        id:0,
         title: form_values.title,
         first_name: form_values.first_name,
         last_name: form_values.last_name,
@@ -99,7 +98,7 @@ export default function PatientRegistrationForm() {
         message: form_values.message,
       });
       console.log("Patient added successfully:", result);
-      router.push("/dashboard")
+      router.push("/patient")
     } catch (error) {
       console.error("Error adding patient:", error);
       // Handle error (e.g., show error message to user)

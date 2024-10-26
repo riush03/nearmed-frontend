@@ -6,7 +6,6 @@ export enum AppointmentStatus {
 }
 
 export interface PatientInput {
-  id: number;
   title: string;
   first_name: string;
   last_name: string;
@@ -24,6 +23,7 @@ export interface PatientInput {
 }
 
 export interface Patient extends PatientInput {
+  id: number,
   medical_history: string[];
   bought_medicine: number[];
 }
@@ -181,6 +181,12 @@ export class PlacesContractInterface {
       method: "get_doctor_details",
       args: { doctor_id: doctorId },
     })) as Promise<Doctor>;
+  }
+
+  async getPatients() {
+    return (await this.wallet.viewMethod({ method: "get_all_registered_patients" })) as Promise<
+      Patient[]
+    >;
   }
 
   // Payable / Call Methods
