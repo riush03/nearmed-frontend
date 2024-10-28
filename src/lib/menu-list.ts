@@ -1,11 +1,13 @@
 import {
-  Tag,
-  Users,
   Settings,
-  Bookmark,
   SquarePen,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  Bot,
+  MessageCircleMore,
+  Store,
+  UserRoundCheck ,
+  UsersRound 
 } from "lucide-react";
 
 type Submenu = {
@@ -36,7 +38,24 @@ export function getMenuList(pathname: string): Group[] {
           href: "/admin/dashboard",
           label: "Dashboard",
           icon: LayoutGrid,
-          submenus: []
+          submenus: [
+            {
+              href: "/admin/patients",
+              label: "All Patients"
+            },
+            {
+              href: "/admin/doctors",
+              label: "All Doctors"
+            },
+            {
+              href: "/admin/medicine",
+              label: "Medicine"
+            },
+            {
+              href: "/admin/update",
+              label: "Update"
+            },
+          ]
         }
       ]
     },
@@ -45,28 +64,37 @@ export function getMenuList(pathname: string): Group[] {
       menus: [
         {
           href: "",
-          label: "Posts",
-          icon: SquarePen,
+          label: "Admin info",
+          icon: UserRoundCheck,
           submenus: [
             {
-              href: "/posts",
-              label: "All Posts"
+              href: "/admin/profile",
+              label: "Profile"
             },
             {
-              href: "/admin/posts/new",
-              label: "New Post"
-            }
+              href: "/admin/notifications",
+              label: "Notifications"
+            },
+            {
+              href: "/admin/appointments",
+              label: "Your appointments"
+            },
           ]
         },
         {
-          href: "/admin/categories",
-          label: "Categories",
-          icon: Bookmark
+          href: "/admin/shp",
+          label: "Shop",
+          icon: Store
         },
         {
-          href: "/admin/tags",
+          href: "/admin/chat",
           label: "Tags",
-          icon: Tag
+          icon: MessageCircleMore
+        },
+        {
+          href: "/admin/ai",
+          label: "AI",
+          icon: Bot
         }
       ]
     },
@@ -76,7 +104,7 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/admin/users",
           label: "Users",
-          icon: Users
+          icon: UsersRound
         },
         {
           href: "/admin/account",

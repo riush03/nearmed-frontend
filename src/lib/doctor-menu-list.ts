@@ -5,7 +5,11 @@ import {
     Bookmark,
     SquarePen,
     LayoutGrid,
-    LucideIcon
+    LucideIcon,
+    Bot,
+    MessageCircleMore,
+    Store,
+    UserRoundCheck ,
   } from "lucide-react";
   
   type Submenu = {
@@ -33,7 +37,7 @@ import {
         groupLabel: "",
         menus: [
           {
-            href: "/doctor/appointment",
+            href: "/doctor/dashboard",
             label: "Dashboard",
             icon: LayoutGrid,
             submenus: []
@@ -46,31 +50,36 @@ import {
           {
             href: "",
             label: "Profile",
-            icon: SquarePen,
+            icon: UserRoundCheck,
             submenus: [
               {
-                href: "/doctor/account",
+                href: "/doctor",
                 label: "Profile"
               },
               {
-                href: "/doctor/history",
-                label: "Medical history"
+                href: "/doctor/appointments",
+                label: "Your Appointments"
               },
               {
-                href: "/doctor/orders",
-                label: "Orders"
+                href: "/doctor/notifications",
+                label: "Notifications"
               }
             ]
           },
           {
-            href: "/admin/categories",
-            label: "Categories",
-            icon: Bookmark
+            href: "/admin/shop",
+            label: "Shop",
+            icon: Store
           },
           {
-            href: "/admin/tags",
-            label: "Tags",
-            icon: Tag
+            href: "/admin/chat",
+            label: "Chat",
+            icon: MessageCircleMore
+          },
+          {
+            href: "/admin/ai",
+            label: "AI",
+            icon: Bot
           }
         ]
       },
@@ -78,12 +87,7 @@ import {
         groupLabel: "Settings",
         menus: [
           {
-            href: "/admin/users",
-            label: "Users",
-            icon: Users
-          },
-          {
-            href: "/admin/account",
+            href: "/doctor/",
             label: "Account",
             icon: Settings
           }

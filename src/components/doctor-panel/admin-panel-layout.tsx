@@ -1,7 +1,7 @@
 "use client";
 
 import { Footer } from "@dapp/components/admin-panel/footer";
-import { Sidebar } from "@dapp/components/admin-panel/sidebar";
+import { Sidebar } from "@dapp/components/doctor-panel/sidebar";
 import { useSidebar } from "@dapp/hooks/use-sidebar";
 import { useStore } from "@dapp/hooks/use-store";
 import { cn } from "@dapp/lib/utils";

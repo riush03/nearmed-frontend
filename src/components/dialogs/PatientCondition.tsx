@@ -26,7 +26,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<any>(null);
 
-  const handleViewPatient = (patient:any) => {
+  const handleViewPatient = (patient: any) => {
     setSelectedPatient(patient);
     setOpen(true);
   }

@@ -1,11 +1,12 @@
 import {
-    Tag,
-    Users,
     Settings,
-    Bookmark,
     SquarePen,
     LayoutGrid,
-    LucideIcon
+    LucideIcon,
+    Bot,
+    MessageCircleMore,
+    Store,
+    UserRoundCheck ,
   } from "lucide-react";
   
   type Submenu = {
@@ -33,7 +34,7 @@ import {
         groupLabel: "",
         menus: [
           {
-            href: "/admin/appointment",
+            href: "/patient/appointment",
             label: "Appointment",
             icon: LayoutGrid,
             submenus: []
@@ -45,11 +46,11 @@ import {
         menus: [
           {
             href: "",
-            label: "Posts",
-            icon: SquarePen,
+            label: "Patients Info",
+            icon: UserRoundCheck ,
             submenus: [
               {
-                href: "/patient/profile",
+                href: "/patient",
                 label: "Profile"
               },
               {
@@ -61,25 +62,25 @@ import {
                 label: "Prescriptions"
               },
               {
-                href: "/patient/history",
+                href: "/patient/patienthistory",
                 label: "Medical history"
               }
             ]
           },
           {
-            href: "/shop",
+            href: "/Patient/shop",
             label: "Shop",
-            icon: Bookmark
+            icon: Store
           },
           {
-            href: "/chat",
+            href: "/patient/chat",
             label: "Chat",
-            icon: Tag
+            icon: MessageCircleMore
           },
           {
-            href: "/ai",
+            href: "/patient/ai",
             label: "Ask AI",
-            icon: Tag
+            icon: Bot
           }
         ]
       },
@@ -87,7 +88,7 @@ import {
         groupLabel: "Settings",
         menus: [
           {
-            href: "/admin/account",
+            href: "/patient",
             label: "Account",
             icon: Settings
           }

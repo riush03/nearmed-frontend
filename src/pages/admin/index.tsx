@@ -16,8 +16,18 @@ import PatientStatistics from "@dapp/components/test_comp";
 import { Avatar, AvatarFallback, AvatarImage } from "@dapp/components/ui/avatar";
 import { useSidebar } from "@dapp/hooks/use-sidebar";
 import { useStore } from "@dapp/hooks/use-store";
-import { ChevronDownIcon, HomeIcon, UserIcon, ShoppingBagIcon, ChatBubbleLeftRightIcon, BeakerIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
+import {  CurrencyDollarIcon } from '@heroicons/react/24/outline';
+import { HeartPulse, Stethoscope, Calendar, Bell } from 'lucide-react'
 import AdminPanelLayout from "@dapp/components/admin-panel/admin-panel-layout";
+
+interface StatCardProps {
+  title: string;
+  value: number;
+  change: number;
+  icon: React.ReactNode;
+  color: string;
+}
+
 
 export default function DashboardPage() {
   const sidebar = useStore(useSidebar, (x) => x);
@@ -47,10 +57,34 @@ export default function DashboardPage() {
             <p className="text-gray-600 mb-8">Hospital Decentralized Medical Center</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <StatCard title="Total Users" value="10,234" />
-              <StatCard title="Number of Doctors" value="1,234" />
-              <StatCard title="Number of Patients" value="9,000" />
-              <BalanceCard balance="9764175.BTT" />
+            <StatCard
+          title="Total Patient"
+          value={2}
+          change={4}
+          icon={<HeartPulse className="h-4 w-4 text-white" />}
+          color="bg-red-400"
+        />
+        <StatCard
+          title="Doctor"
+          value={1}
+          change={4}
+          icon={<Stethoscope className="h-4 w-4 text-white" />}
+          color="bg-green-400"
+        />
+        <StatCard
+          title="Appointment"
+          value={3}
+          change={2}
+          icon={<Calendar className="h-4 w-4 text-white" />}
+          color="bg-blue-400"
+        />
+        <StatCard
+          title="Notifications"
+          value={24}
+          change={5}
+          icon={<Bell className="h-4 w-4 text-white" />}
+          color="bg-purple-400"
+        />
             </div>
           </div>
           <div className='container mx-auto px-6 py-8'>
@@ -72,18 +106,20 @@ export default function DashboardPage() {
   );
 }
 
-const StatCard = ({ title, value }: { title: string, value: string }) => {
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-      </CardContent>
-    </Card>
-  );
-};
+const StatCard: React.FC<StatCardProps> = ({ title, value, change, icon, color }) => (
+  <Card className={`${color} text-white`}>
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardTitle className="text-sm font-medium">{title}</CardTitle>
+      {icon}
+    </CardHeader>
+    <CardContent>
+      <div className="text-2xl font-bold">{value}</div>
+      <p className="text-xs">
+        {change > 0 ? '+' : ''}{change}%
+      </p>
+    </CardContent>
+  </Card>
+)
 
 const BalanceCard = ({ balance }: { balance: string }) => {
   return (

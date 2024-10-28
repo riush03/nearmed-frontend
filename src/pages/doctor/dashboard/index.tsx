@@ -47,7 +47,6 @@ export default function DashboardPage() {
             <p className="text-gray-600 mb-8">Hospital Decentralized Medical Center</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <StatCard title="Total Users" value="10,234" />
               <StatCard title="Number of Doctors" value="1,234" />
               <StatCard title="Number of Patients" value="9,000" />
               <BalanceCard balance="9764175.BTT" />
@@ -104,26 +103,12 @@ const TopDoctorsAndPatients = () => {
     return (
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>Top Doctors & Recent Patients</CardTitle>
+          <CardTitle>Your Patients</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold mb-2">Top Doctors</h3>
-              <div className="space-y-4">
-                {topDoctors.map((doctor, index) => (
-                  <div key={index} className="flex items-center space-x-4">
-                    <Avatar>
-                      <AvatarImage src={doctor.image} alt={doctor.name} />
-                      <AvatarFallback>{doctor.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">{doctor.name}</p>
-                      <p className="text-sm text-gray-500">{doctor.address}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Recent Patients</h3>
@@ -145,11 +130,7 @@ const TopDoctorsAndPatients = () => {
     );
   };
   
-  const topDoctors = [
-    { name: "Dr. John Smith", address: "123 Main St, City", image: "https://i.pravatar.cc/150?img=1" },
-    { name: "Dr. Sarah Johnson", address: "456 Elm St, Town", image: "https://i.pravatar.cc/150?img=2" },
-    { name: "Dr. Michael Lee", address: "789 Oak St, Village", image: "https://i.pravatar.cc/150?img=3" },
-  ];
+
   
   const recentPatients = [
     { name: "Alice Brown", image: "https://i.pravatar.cc/150?img=4" },

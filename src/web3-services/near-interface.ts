@@ -1,9 +1,5 @@
 import { Wallet } from "./near-wallet";
 
-export enum AppointmentStatus {
-  Pending = 'Pending',
-  Completed = 'Completed',
-}
 
 export interface PatientInput {
   title: string;
@@ -57,7 +53,7 @@ export interface Doctor extends DoctorInput {
 }
 
 export interface Medicine {
-  id: number;
+
   doctor_id: number;
   name: string;
   brand: string;
@@ -76,6 +72,23 @@ export interface Medicine {
   availability: boolean;
 }
 
+export interface AppointmentInput {
+  doctor_id: number;
+  from: string;
+  to: string;
+  appointment_date: Date;
+  condition: string;
+  message: string;
+}
+
+export enum AppointmentStatus {
+  Pending,
+  Confirmed,
+  Cancelled,
+  Completed
+}
+
+
 export interface Prescription {
   id: number;
   medicine_id: number;
@@ -84,19 +97,12 @@ export interface Prescription {
   date: bigint;
 }
 
-export interface Appointment {
+export interface Appointment extends AppointmentInput {
   id: number;
-  patient_id: number;
-  doctor_id: number;
-  from: string;
-  to: string;
-  appointment_date: string;
-  condition: string;
+  patient_id: String;
   status: AppointmentStatus;
-  message: string;
   is_open: boolean;
 }
-
 export interface Message {
   patient_id: string; // Assuming AccountId is a string in TypeScript
   doctor_id: string; // Assuming AccountId is a string in TypeScript
@@ -189,6 +195,40 @@ export class PlacesContractInterface {
     >;
   }
 
+  async getAppointments() {
+    return (await this.wallet.viewMethod({ method: "get_all_appointments" })) as Promise<
+      Appointment[]
+    >;
+  }
+
+  async getPatientAppointmentHistory(patientId:String) {
+    return (await this.wallet.viewMethod({ 
+      method: "get_patient_appointment_history",
+      args: { patient_id: patientId },
+    })) as Promise<
+      Appointment[]
+    >;
+  }
+
+  async getDoctorAppointmentHistory(doctorId:number) {
+    return (await this.wallet.viewMethod({ 
+      method: "get_doctor_appointment_historys",
+      args: { doctor_id: doctorId },
+    })) as Promise<
+      Appointment[]
+    >;
+  }
+
+  async getPatientById(patientId:number) {
+    return (await this.wallet.viewMethod({ 
+      method: "get_patient_id",
+      args: { patient_id: patientId },
+    })) as Promise<
+      Patient[]
+    >;
+  }
+
+
   // Payable / Call Methods
 
   /**
@@ -242,6 +282,19 @@ export class PlacesContractInterface {
           args: { patient},
         });
       }
+
+    /**
+     * Book a new appointment
+     * @param patient
+     * @returns
+     */
+        async bookAppointment(appointment: AppointmentInput) {
+          return await this.wallet.callMethod({
+            method: "book_appointment",
+            args: { appointment},
+          });
+        }
+    
   
      /**
      * Add a new patient
@@ -254,4 +307,16 @@ export class PlacesContractInterface {
               args: {medicine},
             });
           }
+
+         /**
+     * Add a new patient
+     * @param patient
+     * @returns
+     */
+      async updatePatientMedicalHistory(id:number,new_update: String) {
+        return await this.wallet.callMethod({
+              method: "update_patient_medical",
+              args: {id,new_update},
+        });
+      }
 }

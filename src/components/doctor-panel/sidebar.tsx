@@ -1,5 +1,5 @@
 "use client";
-import { Menu } from "@dapp/components/admin-panel/menu";
+import { Menu } from "@dapp/components/doctor-panel/menu";
 import { SidebarToggle } from "@dapp/components/admin-panel/sidebar-toggle";
 import { Button } from "@dapp/components/ui/button";
 import { useSidebar } from "@dapp/hooks/use-sidebar";
