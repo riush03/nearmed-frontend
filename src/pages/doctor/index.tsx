@@ -274,7 +274,7 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
   return (
     <div>
     {doctorAppointments.map((appointment) => (
-    <div key={appointment.id } className="bg-gray-50 p-3 rounded-lg mb-3">
+    <div key={appointment.id } className=" p-3 rounded-lg mb-3">
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center">
         <Avatar className="w-8 h-8 mr-2">
@@ -287,7 +287,7 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
         </div>
       </div>
     </div>
-    <div className="flex flex-wrap gap-2 mt-2 bg-white border-light-blue-500">
+    <div className="flex flex-wrap gap-2 mt-2  border-light-blue-500">
     <Badge variant="outline" className="text-xs">
         <ClockIcon className="w-3 h-3 mr-1" />
         {String(appointment.appointment_date)}
