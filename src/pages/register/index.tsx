@@ -77,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 bg-white text-black">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Choose Registration Type</h1>
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-3xl">
         <Card className="w-full md:w-1/2 hover:shadow-lg transition-shadow duration-300">
@@ -96,7 +96,7 @@ export default function Home() {
           <CardFooter>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="w-full">Register as Doctor</Button>
+                <Button className="w-full bg-black text-white">Register as Doctor</Button>
               </DialogTrigger>
               <UserRegistrationForm />
             </Dialog>
@@ -119,7 +119,7 @@ export default function Home() {
           <CardFooter>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="w-full">Register as Patient</Button>
+                <Button className="w-full bg-black text-white">Register as Patient</Button>
               </DialogTrigger>
               <PatientRegistrationForm />
             </Dialog>
