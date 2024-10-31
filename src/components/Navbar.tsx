@@ -1,6 +1,5 @@
 import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useCallback, useState,useEffect } from "react";
-import NewPlaceDialog from "./dialogs/NewPlaceDialog";
 import { wallet } from "@dapp/web3-services";
 import Image from "next/image";
 import placesLogo from "@dapp/images/places-logo.png";

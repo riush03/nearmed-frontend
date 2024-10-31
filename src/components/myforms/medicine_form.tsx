@@ -49,13 +49,10 @@ const formSchema = z.object({
   name: z.string().min(1, { message: "Medicine name required" }),
   brand: z.string().min(1, { message: "Brand name required" }),
   manufacturer: z.string().min(1, { message: "Name of manufacturer" }),
-  manufacture_date: z.date({required_error: "Appointment date is required.",}),
-  expiry_date: z.date({required_error: "Appointment date is required.",}),
   email: z.string().email({ message: "Valid email is required" }),
   manufacturer_address: z.string().min(1, { message: "Manufacturer address is required" }),
   current_location: z.string().min(1, { message: "Address is required" }),
   phone: z.string(),
-  medicine_pic: z.any(),
   description: z.string().max(255, { message: "Description can't be more than 255 characters" }),
 });
 
@@ -77,13 +74,10 @@ export default function MedicineForm() {
         name: "",
         brand: "",
         manufacturer: "",
-        manufacture_date: new Date(),
-        expiry_date: new Date(),
         email: "",
         manufacturer_address: "",
         current_location: "",
         phone: "",
-        medicine_pic: null,
         description: "",
     },
   });
@@ -100,14 +94,10 @@ export default function MedicineForm() {
         name: form_values.name,
         brand: form_values.brand,
         manufacturer: form_values.manufacturer,
-        manufacturing_date: form_values.manufacture_date,
-        expiry_date: form_values.expiry_date,
         company_email: form_values.email,
         manufacturer_address: form_values.manufacturer_address,
-
         current_location: form_values.current_location,
         phone_no: form_values.phone,
-        image: form_values.medicine_pic,
         description: form_values.description
       });
       console.log("Medicine added successfully:", result);
@@ -218,88 +208,7 @@ export default function MedicineForm() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="manufacture_date"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Manufacture Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            className='bg-white'
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="expiry_date"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Expiry Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            className='bg-white'
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+         
               </div>
               <FormField
                 control={form.control}
@@ -309,19 +218,6 @@ export default function MedicineForm() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input type="email" placeholder="john.doe@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="discount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Discount</FormLabel>
-                    <FormControl>
-                      <Input  placeholder="Discount" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -341,32 +237,6 @@ export default function MedicineForm() {
                       <FormLabel>Manufacturer Address</FormLabel>
                       <FormControl>
                         <Input placeholder="Manufacturer Address" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Price</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Price" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="quantity"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Quantity</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Quantity" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -406,19 +276,6 @@ export default function MedicineForm() {
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Any additional information" {...field} className="min-h-[100px]" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="medicine_pic"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Profile Picture URL</FormLabel>
-                      <FormControl>
-                        <Input placeholder="URL to profile picture" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

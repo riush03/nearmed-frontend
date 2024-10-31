@@ -1,4 +1,5 @@
 "use client";
+import React,{useState,useEffect} from "react";
 import Link from "next/link";
 import { ContentLayout } from "@dapp/components/admin-panel/content-layout";
 import {
@@ -19,6 +20,9 @@ import { useStore } from "@dapp/hooks/use-store";
 import {  CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import { HeartPulse, Stethoscope, Calendar, Bell } from 'lucide-react'
 import AdminPanelLayout from "@dapp/components/admin-panel/admin-panel-layout";
+import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
+import { contract } from "@dapp/web3-services";
+import { Patient } from "@dapp/web3-services/near-interface";
 
 interface StatCardProps {
   title: string;
@@ -31,6 +35,21 @@ interface StatCardProps {
 
 export default function DashboardPage() {
   const sidebar = useStore(useSidebar, (x) => x);
+  const [patients, setPatient] = useState<Patient[]>([]); // State to hold a single patient's data
+  const { accountId } = useWeb3Auth();
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const data = await contract.getPatients(); // Fetch all patient data// Filter by account_id
+        setPatient(data);
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    };
+
+    fetchPatientData();
+  }, [accountId]);
   if (!sidebar) return null;
   const { settings, setSettings } = sidebar;
   return (
@@ -53,13 +72,13 @@ export default function DashboardPage() {
        {/* Main Content Area */}
        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           <div className="container mx-auto px-6 py-8">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Welcome to MedHub!</h2>
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Welcome to Nearmed!</h2>
             <p className="text-gray-600 mb-8">Hospital Decentralized Medical Center</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatCard
           title="Total Patient"
-          value={2}
+          value={patients.length}
           change={4}
           icon={<HeartPulse className="h-4 w-4 text-white" />}
           color="bg-red-400"
@@ -87,9 +106,7 @@ export default function DashboardPage() {
         />
             </div>
           </div>
-          <div className='container mx-auto px-6 py-8'>
-            <PatientStatistics/>
-          </div>
+         
 
          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">

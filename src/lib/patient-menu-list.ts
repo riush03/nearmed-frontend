@@ -68,7 +68,7 @@ import {
             ]
           },
           {
-            href: "/Patient/shop",
+            href: "/patient/shop",
             label: "Shop",
             icon: Store
           },

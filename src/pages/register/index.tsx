@@ -40,9 +40,10 @@ export default function Home() {
           for (let i = 0; i < patients.length; i++) {
             console.log(`Patient ${i} Account ID:`, patients[i].account_id);
             console.log("Is it matching",patients[i].account_id === accountId)
-            if(patients[i].account_id.trim().toLowerCase() === accountId.trim().toLowerCase()) {
-            
+            if(patients[i].account_id === accountId) {
               router.push("/patient");
+            } else {
+              router.push("/register");
             }
           }
 

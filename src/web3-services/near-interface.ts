@@ -52,23 +52,20 @@ export interface Doctor extends DoctorInput {
   is_approved: boolean;
 }
 
-export interface Medicine {
-
+export interface MedicineInput {
   doctor_id: number;
   name: string;
   brand: string;
   manufacturer: string;
-  manufacturing_date: string;
-  expiry_date: string;
   company_email: string;
-  discount: bigint;
   manufacturer_address: string;
-  price: bigint;
-  quantity: bigint;
   current_location: string;
-  phone_no: bigint;
-  image: string;
+  phone_no: string;
   description: string;
+}
+
+export interface Medicine extends MedicineInput {
+  id: number;
   availability: boolean;
 }
 
@@ -106,7 +103,7 @@ export interface Appointment extends AppointmentInput {
 export interface Message {
   patient_id: string; // Assuming AccountId is a string in TypeScript
   doctor_id: string; // Assuming AccountId is a string in TypeScript
-  timestamp: bigint;
+  timestamp: Date;
   message: string;
 }
 
@@ -119,42 +116,6 @@ export interface Order {
   date: bigint;
 }
 
-
-
-
-export type Address = {
-  address: string;
-  country: string;
-  state_or_province: string;
-  city: string;
-};
-
-export type PlaceInput = {
-  name: string;
-  address: Address;
-  description: string;
-  pictures: string[];
-  place_type: string;
-};
-
-type Vote = {
-  account_id: string;
-  vote_value: number;
-  feedback: string;
-};
-
-export type Place = {
-  address: Address;
-  avarage_votes: number;
-  description: string;
-  id: number;
-  name: string;
-  pictures: string[];
-  place_type: string;
-  votes: Vote[];
-  votes_counter: number;
-};
-
 export class PlacesContractInterface {
   public wallet: Wallet;
 
@@ -162,19 +123,6 @@ export class PlacesContractInterface {
     this.wallet = wallet;
   }
 
-  // View methods
-  async getPlaces() {
-    return (await this.wallet.viewMethod({ method: "get_places" })) as Promise<
-      Place[]
-    >;
-  }
-
-  async getPlacesById(placeId: number) {
-    return (await this.wallet.viewMethod({
-      method: "get_places_by_id",
-      args: { place_id: placeId },
-    })) as Promise<Place>;
-  }
 
   async getDoctors() {
     return (await this.wallet.viewMethod({ method: "get_all_doctors_data" })) as Promise<
@@ -200,6 +148,19 @@ export class PlacesContractInterface {
       Appointment[]
     >;
   }
+
+  async getDrugs() {
+    return (await this.wallet.viewMethod({method: "get_all_registered_medicines" })) as Promise<
+      Medicine[]
+    >;
+  }
+
+  async getMessages() {
+    return (await this.wallet.viewMethod({method: "get_messages" })) as Promise<
+      Message[]
+    >;
+  }
+
 
   async getPatientAppointmentHistory(patientId:String) {
     return (await this.wallet.viewMethod({ 
@@ -231,34 +192,6 @@ export class PlacesContractInterface {
 
   // Payable / Call Methods
 
-  /**
-   * Add a new place
-   * @param place
-   * @returns
-   */
-  async addPlace(place: PlaceInput) {
-    return await this.wallet.callMethod({
-      method: "add_place",
-      args: { place },
-    });
-  }
-
-  /**
-   * Compute rating (vote)
-   * @param placeId
-   * @param vote
-   * @param feedback
-   * @returns
-   */
-  async vote(placeId: number, vote: number, feedback?: string) {
-    const fixedVote = Math.min(Math.max(vote, 0), 5); // Ensure the value is between 0 and 5
-
-    return await this.wallet.callMethod({
-      method: "vote",
-      args: { place_id: placeId, vote: fixedVote, feedback },
-    });
-  }
-
     /**
    * Add a new doctor
    * @param doctor
@@ -285,7 +218,7 @@ export class PlacesContractInterface {
 
     /**
      * Book a new appointment
-     * @param patient
+     * @param appointment
      * @returns
      */
         async bookAppointment(appointment: AppointmentInput) {
@@ -297,11 +230,11 @@ export class PlacesContractInterface {
     
   
      /**
-     * Add a new patient
-     * @param patient
+     * Add a new medicine
+     * @param medicine
      * @returns
      */
-      async addMedicine(medicine: Medicine) {
+      async addMedicine(medicine: MedicineInput) {
         return await this.wallet.callMethod({
               method: "add_medicine",
               args: {medicine},
@@ -309,7 +242,7 @@ export class PlacesContractInterface {
           }
 
          /**
-     * Add a new patient
+     * Add a new patient history
      * @param patient
      * @returns
      */
@@ -319,4 +252,39 @@ export class PlacesContractInterface {
               args: {id,new_update},
         });
       }
+
+     /**
+     * Approve doctor
+     * @param id
+     * @returns
+     */
+    async approveDoctor(id:number) {
+        return await this.wallet.callMethod({
+               method: "approve_doctor",
+               args: {id},
+          });
+    }
+
+    async sendMessage(recipient: String, message:String) {
+      return await this.wallet.callMethod({
+             method: "send_message",
+             args: {recipient,message},
+        });
+  }
+
+  
+  async completeAppointment(recipient: String, message:String) {
+    return await this.wallet.callMethod({
+           method: "complete_appointment",
+           args: {recipient,message},
+      });
+}
+
+  async buyMedicine(medicine_id: number, price: number,patientId:number) {
+    return await this.wallet.callMethod({
+      method: "buy_medicine",
+      args: { medicine_id, price,patientId},
+    });
+  }
+
 }

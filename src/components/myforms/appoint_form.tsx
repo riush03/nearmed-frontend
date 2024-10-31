@@ -49,7 +49,7 @@ const formSchema = z.object({
   doctor_id: z.number(),
   from: z.string().min(1, "Start time is required"),
   to: z.string().min(1, "End time is required"),
-  appointment_date: z.date({required_error: "A date of birth is required.",}),
+  appointment_date: z.date({required_error: "Appointment date is required.",}),
   condition: z.string().min(1, "Condition is required"),
   message: z.string().refine((val) => val.length <= 255, {message: "String can't be more than 255 characters",}),
 });
