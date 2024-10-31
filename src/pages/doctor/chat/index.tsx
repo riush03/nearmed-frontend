@@ -22,8 +22,9 @@ import { MapPinIcon, MailIcon, PhoneIcon, CalendarIcon, ActivityIcon, ChevronDow
 import AdminPanelLayout from "@dapp/components/doctor-panel/admin-panel-layout";
 import { BellIcon, GiftIcon, MoonIcon, SendIcon } from 'lucide-react';
 import { contract } from "@dapp/web3-services";
-import { Patient,Doctor,Appointment,Message } from "@dapp/web3-services/near-interface";
+import { Patient,Doctor,Appointment,Message ,Notification} from "@dapp/web3-services/near-interface";
 import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
+import { set } from "date-fns";
 
 
 export default function DashboardPage() {
@@ -49,14 +50,17 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [ fetchedDoctors,chats,patient] = await Promise.all([
+        const [ fetchedDoctors,chats,patient,notifications] = await Promise.all([
           contract.getDoctors(),
           contract.getMessages(),
-          contract.getPatients()
+          contract.getPatients(),
+          contract.getNotifications()
         ]);
         setDoctors(fetchedDoctors);
         setChats(chats);
         setPatients(patient);
+        setNotifications(notifications);
+        console.log("Notificaons",notifications);
         console.log("chats",chats)
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -86,6 +90,7 @@ export default function DashboardPage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [chats, setChats] = useState<Message[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const handleSendMessage = async () => {
     try {
       const [patients, doctors, appointments] = await Promise.all([

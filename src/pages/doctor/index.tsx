@@ -11,7 +11,7 @@ import {
   BreadcrumbSeparator
 } from "@dapp/components/ui/breadcrumb";
 import { Textarea } from "@dapp/components/ui/textarea";
-import { Dialog,DialogFooter,DialogContent,DialogHeader,DialogTitle,DialogDescription } from "@dapp/components/ui/dialog";
+import { Dialog,DialogFooter,DialogContent,DialogHeader,DialogTitle,DialogDescription ,DialogTrigger} from "@dapp/components/ui/dialog";
 import { Button } from "@dapp/components/ui/button";
 import { Label } from "@dapp/components/ui/label";
 import { Badge } from "@dapp/components/ui/badge";
@@ -27,6 +27,7 @@ import { BellIcon, GiftIcon, MoonIcon, PencilIcon } from 'lucide-react';
 import { contract } from "@dapp/web3-services";
 import { Doctor,Patient,Appointment } from "@dapp/web3-services/near-interface";
 import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
+import UpdateAppointmentDialog from "@dapp/components/myforms/patient_instructions";
 
 interface AppointmentItemProps {
   name: string;
@@ -195,6 +196,7 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
   const [medicalHistory, setMedicalHistory] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
   
 
   useEffect(() => {
@@ -292,18 +294,17 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
         <ClockIcon className="w-3 h-3 mr-1" />
         {String(appointment.appointment_date)}
       </Badge>
-      <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs py-1 h-7 bg-black text-white"
-          onClick={() => handleUpdate(appointment)}>
-        <PersonIcon className="w-3 h-3 mr-1text " />
-        Update
-      </Button>
-      <Button variant="outline" size="sm" className="text-xs py-1 h-7 bg-black text-white">
-        <PersonIcon className="w-3 h-3 mr-1text " />
-          Prescribe
-      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="bg-black text-white border-gray-300 hover:bg-gray-100">
+          Update 
+        </Button>
+      </DialogTrigger>
+      <div>
+        <UpdateAppointmentDialog/>
+      </div>
+      </Dialog>
+      
       <Button variant="outline" size="sm" className="text-xs py-1 h-7 bg-black text-white">
         <CalendarIcon className="w-3 h-3 mr-1" />
         Complete Appointment
@@ -311,26 +312,7 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
     </div>
   </div>
     ))}
-         <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-white text-slate-900 rounded-lg shadow-md p-0">
-          <DialogHeader className="px-6 pt-8 pb-4 border-b border-b-slate-200">
-            <DialogTitle className="text-lg font-medium text-slate-900">Update Patient Condition</DialogTitle>
-            <DialogDescription>
-              {selectedAppointment && (
-                <p className="text-slate-500">Current patient conditions for {selectedAppointment.patient_id}</p>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="p-6">
-            <Textarea id="medicalHistory" placeholder="Enter medical history here" className="h-40 w-full" />
-          </div>
-          <DialogFooter className="px-6 py-4 border-t border-t-slate-200">
-            <Button type="submit" onClick={updatePatientCondition} className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg">
-              Update Condition
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+         
   </div>
   );
 };

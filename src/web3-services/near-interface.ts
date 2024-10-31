@@ -94,6 +94,14 @@ export interface Prescription {
   date: bigint;
 }
 
+export interface AdviceInput{
+  advice: string,
+  meds: string,
+}
+
+export interface DoctorAdvice extends AdviceInput{
+  timestamp: Date;
+}
 export interface Appointment extends AppointmentInput {
   id: number;
   patient_id: String;
@@ -107,6 +115,12 @@ export interface Message {
   message: string;
 }
 
+export interface Notification{
+  account_id: string;
+  message: string;
+  timestamp: Date;
+}
+
 export interface Order {
   medicine_id: number;
   price: bigint;
@@ -116,7 +130,7 @@ export interface Order {
   date: bigint;
 }
 
-export class PlacesContractInterface {
+export class NearmedContractInterface {
   public wallet: Wallet;
 
   constructor(wallet: Wallet) {
@@ -161,6 +175,29 @@ export class PlacesContractInterface {
     >;
   }
 
+  async getNotifications() {
+    return (await this.wallet.viewMethod({method: "get_all_notifications" })) as Promise<
+      Notification[]
+    >;
+  }
+
+  async getAdvices(id:number) {
+    return (await this.wallet.viewMethod({
+      method: "get_advice_by_patient_id",
+      args: { patient_id: id },
+    })) as Promise<
+      DoctorAdvice[]
+    >;
+  }
+
+  async getNotificationsByAccountId(accountId: String) {
+    return (await this.wallet.viewMethod({
+      method: "get_notifications_by_account_id",
+      args: { account_id: accountId },
+    })) as Promise<
+      Notification[]
+    >;
+  }
 
   async getPatientAppointmentHistory(patientId:String) {
     return (await this.wallet.viewMethod({ 
@@ -241,6 +278,13 @@ export class PlacesContractInterface {
             });
           }
 
+      async addAdvice(advice: AdviceInput){
+        return await this.wallet.callMethod({
+          method: "add_doctor_advice",
+          args: {advice},
+        });
+      }
+
          /**
      * Add a new patient history
      * @param patient
@@ -273,10 +317,10 @@ export class PlacesContractInterface {
   }
 
   
-  async completeAppointment(recipient: String, message:String) {
+  async completeAppointment(id:number,userId: String) {
     return await this.wallet.callMethod({
            method: "complete_appointment",
-           args: {recipient,message},
+           args: {id,userId},
       });
 }
 

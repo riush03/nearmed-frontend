@@ -1,6 +1,6 @@
-import { PlacesContractInterface } from "./near-interface";
+import { NearmedContractInterface } from "./near-interface";
 import { wallet } from "./near-wallet";
 
-const contract = new PlacesContractInterface(wallet);
+const contract = new NearmedContractInterface(wallet);
 
 export { contract, wallet };

@@ -67,11 +67,6 @@ import {
             ]
           },
           {
-            href: "/admin/shop",
-            label: "Shop",
-            icon: Store
-          },
-          {
             href: "/doctor/chat",
             label: "Chat",
             icon: MessageCircleMore

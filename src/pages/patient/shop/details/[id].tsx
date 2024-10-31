@@ -21,10 +21,12 @@ import { contract } from "@dapp/web3-services";
 import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
 
 
+
 export default function CategoriesPage() {
   const router = useRouter();
   const { id } = router.query;
   const [quantity, setQuantity] = useState(1);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const medicineId = parseInt(id as string);
   const [medicineData, setMedicineData] = useState<any>(null);
 
@@ -41,6 +43,14 @@ export default function CategoriesPage() {
   if (!medicineData) {
       return <p>Medicine not found</p>;
   }
+
+  const handleBuy = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
 
   return (
     <div className=" bg-gray-100">
@@ -140,7 +150,7 @@ export default function CategoriesPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
+                    <Button className="w-full bg-green-500 hover:bg-green-600 text-white" >
                       Buy
                     </Button>
                   </div>
@@ -157,6 +167,7 @@ export default function CategoriesPage() {
           </div>
     </ContentLayout>
     </AdminPanelLayout>
+ 
     </div>
   );
 }

@@ -43,7 +43,6 @@ export class Wallet {
     this.walletSelector = await setupWalletSelector({
       network: NETWORK === "mainnet" ? "mainnet" : "testnet",
       modules: [
-        setupNearWallet({ iconUrl: NearIconUrl.src }),
         setupMyNearWallet({ iconUrl: MyNearIconUrl.src }),
         setupLedger({ iconUrl: LedgerIconUrl.src }),
       ],

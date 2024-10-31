@@ -20,47 +20,47 @@ import { Appointment ,Patient} from "@dapp/web3-services/near-interface";
 import useWeb3Auth from "@dapp/hooks/useWeb3Auth";
 
 export default function CategoriesPage() {
-  const patients = [
-    {
-      id: 1,
-      name: "Mr. Toby Donge",
-      email: "tobe@gmail.com",
-      bookingDate: "09/30/2024, 02:43:59 AM",
-      date: "2024-10-01",
-      from: "9:31 AM",
-      to: "12:32 AM",
-      mobile: "0712345678",
-      appointment: "#A-001",
-      status: "Close",
-      image: "https://avatars.githubusercontent.com/u/87783670?v=4",
-    },
-    {
-      id: 2,
-      name: "Mr. Toby Donge",
-      email: "tobe@gmail.com",
-      bookingDate: "10/02/2024, 09:58:25 PM",
-      date: "2024-10-03",
-      from: "10:31 AM",
-      to: "1:32 PM",
-      mobile: "0712345678",
-      appointment: "#A-002",
-      status: "Open",
-      image: "https://avatars.githubusercontent.com/u/87783670?v=4",
-    },
-    {
-      id: 3,
-      name: "Mr. Toby Donge",
-      email: "tobe@gmail.com",
-      bookingDate: "10/06/2024, 08:56:29 AM",
-      date: "2024-10-07",
-      from: "10:31 AM",
-      to: "2:34 PM",
-      mobile: "0712345678",
-      appointment: "#A-003",
-      status: "Open",
-      image: "https://avatars.githubusercontent.com/u/87783670?v=4",
-    },
-  ]
+  // const patients = [
+  //   {
+  //     id: 1,
+  //     name: "Mr. Toby Donge",
+  //     email: "tobe@gmail.com",
+  //     bookingDate: "09/30/2024, 02:43:59 AM",
+  //     date: "2024-10-01",
+  //     from: "9:31 AM",
+  //     to: "12:32 AM",
+  //     mobile: "0712345678",
+  //     appointment: "#A-001",
+  //     status: "Close",
+  //     image: "https://avatars.githubusercontent.com/u/87783670?v=4",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Mr. Toby Donge",
+  //     email: "tobe@gmail.com",
+  //     bookingDate: "10/02/2024, 09:58:25 PM",
+  //     date: "2024-10-03",
+  //     from: "10:31 AM",
+  //     to: "1:32 PM",
+  //     mobile: "0712345678",
+  //     appointment: "#A-002",
+  //     status: "Open",
+  //     image: "https://avatars.githubusercontent.com/u/87783670?v=4",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Mr. Toby Donge",
+  //     email: "tobe@gmail.com",
+  //     bookingDate: "10/06/2024, 08:56:29 AM",
+  //     date: "2024-10-07",
+  //     from: "10:31 AM",
+  //     to: "2:34 PM",
+  //     mobile: "0712345678",
+  //     appointment: "#A-003",
+  //     status: "Open",
+  //     image: "https://avatars.githubusercontent.com/u/87783670?v=4",
+  //   },
+  // ]
 
   const { isWalletConnected, accountId } = useWeb3Auth();
   const [doctorAppointments, setDoctorAppointments] = useState<Appointment[]>([]);
