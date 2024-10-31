@@ -274,7 +274,7 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
   return (
     <div>
     {doctorAppointments.map((appointment) => (
-    <div key={appointment.id || index} className="bg-gray-50 p-3 rounded-lg mb-3">
+    <div key={appointment.id} className="bg-gray-50 p-3 rounded-lg mb-3">
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center">
         <Avatar className="w-8 h-8 mr-2">
