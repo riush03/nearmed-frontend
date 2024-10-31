@@ -13,7 +13,7 @@ export function Sidebar() {
   if (!sidebar) return null;
   const { isOpen, toggleOpen, getOpenState, setIsHover, settings } = sidebar;
   return (
-    <div className=" bg-gray-100">
+    <div className=" bg-white text-black">
     <aside
       className={cn(
         "fixed flex flex-col gap-2  left-0 z-20 h-screen -translate-x-full lg:translate-x-0 transition-[width] ease-in-out duration-300",
