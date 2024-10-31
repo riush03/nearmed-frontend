@@ -138,7 +138,7 @@ export default function UserRegistrationForm() {
                               <SelectValue placeholder="Select a title" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className="bg-white">
                             <SelectItem value="Mr">Mr</SelectItem>
                             <SelectItem value="Mrs">Mrs</SelectItem>
                             <SelectItem value="Ms">Ms</SelectItem>
@@ -187,7 +187,7 @@ export default function UserRegistrationForm() {
                               <SelectValue placeholder="Select gender" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className="bg-white">
                             <SelectItem value="male">Male</SelectItem>
                             <SelectItem value="female">Female</SelectItem>
                             <SelectItem value="other">Other</SelectItem>
