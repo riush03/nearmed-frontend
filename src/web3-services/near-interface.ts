@@ -156,7 +156,7 @@ export class PlacesContractInterface {
   }
 
   async getMessages() {
-    return (await this.wallet.viewMethod({method: "get_messages" })) as Promise<
+    return (await this.wallet.viewMethod({method: "get_all_messages" })) as Promise<
       Message[]
     >;
   }

@@ -117,7 +117,7 @@ export default function UserRegistrationForm() {
 
   return (
    
-      <DialogContent className="sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] w-[95vw] max-h-[90vh] overflow-y-auto bg-white">
+      <DialogContent className="sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] w-[95vw] max-h-[90vh] overflow-y-auto bg-white text-black">
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-bold">Doctor Registration</DialogTitle>
         </DialogHeader>

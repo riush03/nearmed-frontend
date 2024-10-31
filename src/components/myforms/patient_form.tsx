@@ -106,7 +106,7 @@ export default function PatientRegistrationForm() {
   }
 
   return (
-      <DialogContent className="sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] w-[95vw] max-h-[90vh] overflow-y-auto ">
+      <DialogContent className="sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] w-[95vw] max-h-[90vh] overflow-y-auto bg-white text-black">
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-bold">Patient Registration</DialogTitle>
         </DialogHeader>
@@ -226,7 +226,7 @@ export default function PatientRegistrationForm() {
                     </FormItem>
                   )}
                 />
-                <Button type="button" onClick={() => setStep(2)} className="w-full sm:w-auto bg-slate-600 text-white">Next</Button>
+                <Button type="button" onClick={() => setStep(2)} className="w-full sm:w-auto">Next</Button>
               </>
             )}
             {step === 2 && (
@@ -325,8 +325,8 @@ export default function PatientRegistrationForm() {
                   )}
                 />
                 <div className="flex flex-col sm:flex-row justify-between gap-4">
-                  <Button type="button" onClick={() => setStep(1)} className="w-full sm:w-auto bg-slate-600 text-white">Previous</Button>
-                  <Button type="submit" className="w-full sm:w-auto bg-slate-600 text-white">Submit</Button>
+                  <Button type="button" onClick={() => setStep(1)} className="w-full sm:w-auto">Previous</Button>
+                  <Button type="submit" className="w-full sm:w-auto">Submit</Button>
                 </div>
               </>
             )}

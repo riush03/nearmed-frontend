@@ -19,7 +19,7 @@ import { Input } from "@dapp/components/ui/input";
 import { useSidebar } from "@dapp/hooks/use-sidebar";
 import { useStore } from "@dapp/hooks/use-store";
 import { MapPinIcon, MailIcon, PhoneIcon, CalendarIcon, ActivityIcon, ChevronDownCircleIcon } from 'lucide-react';
-import AdminPanelLayout from "@dapp/components/patient-panel/admin-panel-layout";
+import AdminPanelLayout from "@dapp/components/doctor-panel/admin-panel-layout";
 import { BellIcon, GiftIcon, MoonIcon, SendIcon } from 'lucide-react';
 import { contract } from "@dapp/web3-services";
 import { Patient,Doctor,Appointment,Message } from "@dapp/web3-services/near-interface";
@@ -31,7 +31,7 @@ export default function DashboardPage() {
   const sidebar = useStore(useSidebar, (x) => x);
   const { accountId } = useWeb3Auth();
 
-  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [messageInput, setMessageInput] = useState('');
   const[appointment,setAppointment] = useState<Appointment | null>(null);
 
@@ -49,12 +49,14 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [ fetchedDoctors,chats] = await Promise.all([
+        const [ fetchedDoctors,chats,patient] = await Promise.all([
           contract.getDoctors(),
-          contract.getMessages()
+          contract.getMessages(),
+          contract.getPatients()
         ]);
         setDoctors(fetchedDoctors);
         setChats(chats);
+        setPatients(patient);
         console.log("chats",chats)
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -83,6 +85,7 @@ export default function DashboardPage() {
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [chats, setChats] = useState<Message[]>([]);
+  const [patients, setPatients] = useState<Patient[]>([]);
   const handleSendMessage = async () => {
     try {
       const [patients, doctors, appointments] = await Promise.all([
@@ -92,24 +95,28 @@ export default function DashboardPage() {
       ]);
   
       // Check if the current account is a patient
-      const patient = patients.find((p) => p.account_id === accountId);
+      const doctor = doctors.find((p) => p.account_id === accountId);
   
-      if (patient) {
+      if (doctor) {
         // Find the patient's appointments and related doctor
         for (let j = 0; j < appointments.length; j++) {
+            for(let k = 0; k < patients.length; k++ ){
+                
           const appointment = appointments[j];
+          const patie = patients[k]
   
-          if (appointment.patient_id === accountId) {
-            const doctor = doctors.find((d) => d.id === appointment.doctor_id);
+          if (appointment.patient_id === patie.account_id) {
+            const patient = patients.find((d) => d.account_id === appointment.patient_id);
   
-            if (doctor) {
+            if (patient) {
               // Send message to the selected doctor
-              await contract.sendMessage(doctor.account_id, messageInput);
+              await contract.sendMessage(patient.account_id, messageInput);
               setMessageInput(''); // Clear the message input after sending
-              console.log("Message sent to doctor:", doctor.account_id);
-              setSelectedDoctor(doctor); // Set the selected doctor
+              console.log("Message sent to doctor:", patient.account_id);
+              setSelectedPatient(patient); // Set the selected doctor
             }
           }
+        }
         }
       }
     } catch (error) {
@@ -149,14 +156,14 @@ export default function DashboardPage() {
                   {/* Doctor List */}
                   <div className="w-1/3 border-r pr-4">
                     <h2 className="text-xl font-semibold mb-4">Message / Doctors</h2>
-                    {doctors.map((doctor) => (
+                    {patients.map((patient) => (
                       <Button
-                        key={doctor.id}
-                        variant={appointment?.doctor_id ? "default" : "ghost"}
-                        className={`w-full justify-start mb-2 ${appointment?.doctor_id === doctor.id ? 'bg-green-500 text-white' : ''}`}
-                        onClick={() => {doctor.first_name}}
+                        key={patient.id}
+                        variant={appointment?.patient_id ? "default" : "ghost"}
+                        className={`w-full justify-start mb-2 ${appointment?.patient_id === patient.account_id ? 'bg-green-500 text-white' : ''}`}
+                        onClick={() => {patient.first_name}}
                       >
-                        {appointment?.doctor_id ? doctor.first_name : <span className="flex items-center"><span className="w-8 h-8 rounded-full bg-gray-300 mr-2"></span>{doctor.first_name} {doctor.last_name}</span>}
+                        {appointment?.patient_id ? patient.first_name : <span className="flex items-center"><span className="w-8 h-8 rounded-full bg-gray-300 mr-2"></span>{patient.first_name} {patient.last_name}</span>}
                       </Button>
                     ))}
                   </div>
@@ -167,7 +174,7 @@ export default function DashboardPage() {
                     <div className="flex-1 overflow-y-auto mb-4">
                       {chats.map((message, index) => (
                         <div key={index} className="mb-4">
-                          <p className="text-sm text-gray-500">{message.patient_id} </p>
+                          <p className="text-sm text-gray-500">{patient?.account_id} </p>
                           <p className="bg-gray-100 p-2 rounded-lg mt-1">{message.message}</p>
                         </div>
                       ))}

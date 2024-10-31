@@ -72,7 +72,7 @@ import {
             icon: Store
           },
           {
-            href: "/admin/chat",
+            href: "/doctor/chat",
             label: "Chat",
             icon: MessageCircleMore
           },
