@@ -95,8 +95,6 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(234, 232, 239);
-  background-image: radial-gradient(at 0% 0%, rgb(224, 223, 234) 0px, transparent 70%), radial-gradient(at 50% 0%, rgb(73, 95, 163) 0px, transparent 50%), radial-gradient(at 100% 0%, rgb(114, 39, 65) 0px, transparent 50%);
-  background-repeat: no-repeat;
 }
 
 a {
