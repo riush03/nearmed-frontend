@@ -127,7 +127,7 @@ export default function DashboardPage() {
 
           {/* Doctor Profile */}
           <Card className="md:col-span-2">
-            <CardContent className="p-6">
+            <CardContent className="p-6 text-black">
               <div className="flex flex-col md:flex-row">
                 <Avatar className="w-24 h-24 md:w-32 md:h-32">
                   <AvatarImage src={doctor.profile_pic} alt="Mr. Denis Muriungi" />
@@ -157,7 +157,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Doctor Details */}
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
                 <DetailItem icon={<MapPinIcon />} label="Doctor Address" value={doctor.address} />
                 <DetailItem icon={<MailIcon />} label="Email" value={doctor.email} />
                 <DetailItem icon={<MapPinIcon />} label="Designation" value={doctor.designation} />
@@ -282,13 +282,13 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ name, phone, time }) 
           <AvatarFallback>{patient?.profile_pic}</AvatarFallback>
         </Avatar>
         <div >
-          <h3 className="font-semibold text-sm">{patient?.first_name} {patient?.last_name}</h3>
+          <h3 className="font-semibold text-sm text-black">{patient?.first_name} {patient?.last_name}</h3>
           <p className="text-xs text-gray-500">Phone: {patient?.phone}</p>
         </div>
       </div>
     </div>
     <div className="flex flex-wrap gap-2 mt-2  border-light-blue-500">
-    <Badge variant="outline" className="text-xs">
+    <Badge variant="outline" className="text-xs text black">
         <ClockIcon className="w-3 h-3 mr-1" />
         {String(appointment.appointment_date)}
       </Badge>
