@@ -237,7 +237,7 @@ export default function UserRegistrationForm() {
                     </FormItem>
                   )}
                 />
-                <Button type="button" onClick={() => setStep(2)} className="w-full sm:w-auto bg-black text-white>Next</Button>
+                <Button type="button" onClick={() => setStep(2)} className="w-full sm:w-auto bg-black text-white">Next</Button>
               </>
             )}
             {step === 2 && (
